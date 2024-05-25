@@ -127,7 +127,7 @@ def create_progress_bar(start, current, target, width=400, height=50, bar_color_
 
 # Example usage:
 if __name__ == "__main__":
-    api_key = 'AIzaSyD27p8iQO1g8iaazCctPbnWyheNXcefNfc'
+    api_key = os.environ['API']
     channel_id = 'UCT0vmR76yrI__1W2W6ELMxA'  # Replace with your actual channel ID
     subscriber_count = int(get_subscriber_count(api_key, channel_id))
 

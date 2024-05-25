@@ -5,8 +5,8 @@ from moviepy.editor import VideoFileClip, AudioFileClip
 from length import get_video_duration
 from download import download_video
 from pick import pick
-
-TOKEN = 'MTIyNzg5NzY2MjU3MzkwMzg3Mg.G1oFmm.srjPhU-7hg7zqeRZiSNGxZ9ppqeaxuKyKfgIN8'
+import os
+TOKEN = os.environ['API']
 CHANNEL_ID = '1240324282094190642'
 file_path = "video_urls.json"
 SEND_message_proxy_url = f"https://discord.com/api/v9/channels/{CHANNEL_ID}/messages"

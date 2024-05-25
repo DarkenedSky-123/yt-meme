@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-import os.path
+import os
 import time
 import random
 import sys

@@ -1,7 +1,8 @@
 import requests
 import json
+import os
 def get(file,id):
-    TOKEN = 'MTIyNzg5NzY2MjU3MzkwMzg3Mg.G1oFmm.srjPhU-7hg7zqeRZiSNGxZ9ppqeaxuKyKfgIN8'
+    TOKEN = os.environ['TOKEN']
     DATA_CHANNEL_ID = id
 
     # Discord API endpoint for fetching messages
@@ -42,5 +43,8 @@ def get(file,id):
         content = latest_message.get("content", "")
         save_content_to_json(content)
 
-get("latest_message_content.json","1232976008408334356")
+get("Data/channels_data.json","1232976045339181056")
+get("Data/subreddits data.json","1232976008408334356")
+get("Data/title.txt","1232976008408334356")
+get("Data/Part.txt","1239562583896494141")
 #"latest_message_content.json"'1232976008408334356'

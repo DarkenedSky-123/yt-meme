@@ -112,7 +112,7 @@ def download_image(url, save_path):
 if __name__ == "__main__" :
         channel_names = ['memenade','memenadedm','memelion']
         channel_ids = ['UCCWp4CCmI2JmIaoAuv0ocEA','UCOsM-xMGrGH0RHffLIznrUA','UCv-6OlG8qGY-mKlE_IUkI3w']
-        api_key = 'AIzaSyAAkdZaOAyVOMdSlICjgi-bfU1h1z0gmps'
+        api_key = os.environ['API']
 
         # Loop through each channel and process it
         channel_name = random.choice(channel_names)

@@ -5,7 +5,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
 import json
-
+import os
 def scrape(link):
     driver_path = r"D:\Desktop\Data\E-commerce\Youtube\Byte\Meme\byte_Meme\Discord\chromedriver.exe"
     brave_path = r"C:\Program Files\BraveSoftware\Brave-Browser\Application\brave.exe"
@@ -32,8 +32,8 @@ def scrape(link):
         password_field = driver.find_element(By.NAME, 'password')
 
         # Enter your Discord username and password
-        username_field.send_keys('armx94522@gmail.com')
-        password_field.send_keys('Armxisaboss123')
+        username_field.send_keys(os.environ['GMAIL'])
+        password_field.send_keys(os.environ['PASS'])
 
         # Submit the login form
         password_field.send_keys(Keys.RETURN)

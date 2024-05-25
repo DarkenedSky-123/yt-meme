@@ -6,7 +6,7 @@ from Help.download_reddit import VideoDownloader
 from Help.short import VideoShortener
 import requests
 import random
-TOKEN = 'MTIyNzg5NzY2MjU3MzkwMzg3Mg.G1oFmm.srjPhU-7hg7zqeRZiSNGxZ9ppqeaxuKyKfgIN8'
+TOKEN = os.environ['TOKEN']
 CHANNEL_ID = '1240324282094190642'
 SEND_message_proxy_url = f"https://discord.com/api/v9/channels/{CHANNEL_ID}/messages"
 
@@ -100,7 +100,7 @@ def reddit_video(name):
 downloaded_count = 0
 while downloaded_count < 4:
     print(f"Downloaded count: {downloaded_count}")
-    functions = [reddit_video]
+    functions = [reddit_video,youtube_video]
     # Randomly choose and execute a function
     random_function = random.choice(functions)
     downloaded = random_function(f"video_{downloaded_count}")

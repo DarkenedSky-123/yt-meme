@@ -34,8 +34,8 @@ class VideoMerger:
         video_clips = []
 
         # Load and resize intro video
-        intro_clip = self.load_and_resize_video(intro_video_path)
-        video_clips.append(intro_clip)
+        # intro_clip = self.load_and_resize_video(intro_video_path)
+        # video_clips.append(intro_clip)
 
         # Load and resize video clips from the input folder
         self.load_and_resize_input_folder(video_clips)
