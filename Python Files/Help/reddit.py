@@ -85,6 +85,7 @@ class RedditMemeDownloader:
                     print(f"Failed to retrieve meme videos from subreddit: {self.subreddit_name}")
 
             except OSError as e:
+                print(video_url)
                 print(f"Error: {e}. Skipping to the next URL.")
                 continue
 
