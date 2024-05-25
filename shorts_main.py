@@ -4,7 +4,7 @@ import os
 
 
 try:
-        for i in range(0,0, 1):
+        for i in range(0,1, 1):
                 
                 subprocess.run(["python", "Python Files/create.py"], check=True)
                 subprocess.run(["python", "Python Files/files.py"], check=True)
