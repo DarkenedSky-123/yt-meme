@@ -20,8 +20,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v2
 
-      - name: Install FFmpeg
-        uses: actions/setup-ffmpeg@v3  # Installs FFmpeg for the current OS
+      - name: Setup FFmpeg
+        uses: federicocarboni/setup-ffmpeg@v3.1
 
       - name: Set up Python
         uses: actions/setup-python@v3
