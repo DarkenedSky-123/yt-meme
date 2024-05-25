@@ -18,8 +18,8 @@ class RedditMemeDownloader:
             with open(data_filename, "r") as file:
                 data = json.load(file)
                 last_downloaded_url = data.get(self.subreddit_name, {}).get('last_downloaded_url', "")
-        return "https://v.redd.it/"+last_downloaded_url
-    
+        return "https://v.redd.it/" + last_downloaded_url if last_downloaded_url else ""
+
     def download_meme_videos(self):
         video_info_list = []
 
@@ -28,58 +28,66 @@ class RedditMemeDownloader:
                 endpoint = f"https://www.reddit.com/r/{self.subreddit_name}/.json?limit=200&t=all"
                 headers = {"User-Agent": "Mozilla/5.0"}
                 response = requests.get(endpoint, headers=headers)
-                data = response.json()
 
-                if response.status_code == 200 and data and "data" in data and "children" in data["data"]:
-                    posts = data["data"]["children"]
+                if response.status_code == 200:
+                    try:
+                        data = response.json()
+                    except json.JSONDecodeError:
+                        print(f"Failed to parse JSON response. Status code: {response.status_code}")
+                        print(f"Response content: {response.content}")
+                        continue
 
-                    start_index = 0
-                    if self.last_downloaded_url:
-                        for index, post in enumerate(posts):
+                    if "data" in data and "children" in data["data"]:
+                        posts = data["data"]["children"]
+
+                        start_index = 0
+                        if self.last_downloaded_url:
+                            for index, post in enumerate(posts):
+                                if post and "data" in post and "secure_media" in post["data"] and post["data"]["secure_media"] and "reddit_video" in post["data"]["secure_media"]:
+                                    video_url = post["data"]["secure_media"]["reddit_video"]["fallback_url"].split("?")[0]
+                                    if video_url == self.last_downloaded_url:
+                                        start_index = index + 1
+                                        break
+
+                        for post in posts[start_index:]:
                             if post and "data" in post and "secure_media" in post["data"] and post["data"]["secure_media"] and "reddit_video" in post["data"]["secure_media"]:
                                 video_url = post["data"]["secure_media"]["reddit_video"]["fallback_url"].split("?")[0]
-                                if video_url == self.last_downloaded_url:
-                                    start_index = index + 1
-                                    break
+                                video_url = video_url.replace("https://v.redd.it/", "")
+                                if "source=fallback" in video_url:
+                                    video_url = video_url.replace("source=fallback", "")
 
-                    for post in posts[start_index:]:
-                        if post and "data" in post and "secure_media" in post["data"] and post["data"]["secure_media"] and "reddit_video" in post["data"]["secure_media"]:
-                            video_url = post["data"]["secure_media"]["reddit_video"]["fallback_url"].split("?")[0]
-                            video_url = video_url.replace("https://v.redd.it/","")
-                            if "source=fallback" in video_url:
-                                video_url = video_url.replace("source=fallback", "")
-                                
-                            audio_url_parts = video_url.split("/")
-                            audio_url_parts[-1] = "DASH_AUDIO_128.mp4"
-                            audio_url = "/".join(audio_url_parts)
+                                audio_url_parts = video_url.split("/")
+                                audio_url_parts[-1] = "DASH_AUDIO_128.mp4"
+                                audio_url = "/".join(audio_url_parts)
 
-                            flair = post["data"]["link_flair_text"] if "link_flair_text" in post["data"] else "No Flair"
-                            video_duration = post["data"]["secure_media"]["reddit_video"]["duration"] if "secure_media" in post["data"] and "reddit_video" in post["data"]["secure_media"] else None
+                                flair = post["data"]["link_flair_text"] if "link_flair_text" in post["data"] else "No Flair"
+                                video_duration = post["data"]["secure_media"]["reddit_video"]["duration"] if "secure_media" in post["data"] and "reddit_video" in post["data"]["secure_media"] else None
 
-                            video_info = {
-                                "flair": flair,
-                                "video_url": video_url,
-                                "audio_url": audio_url,
-                                "video_duration": video_duration
-                            }
+                                video_info = {
+                                    "flair": flair,
+                                    "video_url": video_url,
+                                    "audio_url": audio_url,
+                                    "video_duration": video_duration
+                                }
 
-                            video_info_list.append(video_info)
-                           
-                            if video_url not in self.downloaded_videos:
-                                self.downloaded_videos.add(video_url)
+                                video_info_list.append(video_info)
 
-                                self.last_downloaded_url = video_url
-                                self.save_last_downloaded_url()
+                                if video_url not in self.downloaded_videos:
+                                    self.downloaded_videos.add(video_url)
 
-                                self.merge_count += 1
+                                    self.last_downloaded_url = video_url
+                                    self.save_last_downloaded_url()
 
-                                if self.merge_count >= self.max_merge_count:
-                                    break
+                                    self.merge_count += 1
 
-                    time.sleep(1)
+                                    if self.merge_count >= self.max_merge_count:
+                                        break
+
+                        time.sleep(1)
 
                 else:
-                    print(f"Failed to retrieve meme videos from subreddit: {self.subreddit_name}")
+                    print(f"Failed to retrieve meme videos from subreddit: {self.subreddit_name}, Status code: {response.status_code}")
+                    print(f"Response content: {response.content}")
 
             except OSError as e:
                 print(f"Error: {e}. Skipping to the next URL.")
@@ -100,5 +108,16 @@ class RedditMemeDownloader:
 
         data[self.subreddit_name] = {'last_downloaded_url': self.last_downloaded_url}
 
+        os.makedirs(os.path.dirname(data_filename), exist_ok=True)
         with open(data_filename, "w") as file:
             json.dump(data, file, indent=4)
+
+
+def main():
+    subreddit_name = "funny"  # Replace with your target subreddit
+    downloader = RedditMemeDownloader(subreddit_name)
+    video_info_list = downloader.download_meme_videos()
+    print(f"Downloaded {len(video_info_list)} videos")
+
+if __name__ == "__main__":
+    main()
