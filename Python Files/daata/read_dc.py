@@ -44,7 +44,7 @@ def get(file,id):
         save_content_to_json(content)
 
 get("Data/channels_data.json","1232976045339181056")
-get("Data/subreddits data.json","1232976008408334356")
+get("Data/subreddits_data.json","1232976008408334356")
 get("Data/title.txt","1232976008408334356")
 get("Data/Part.txt","1239562583896494141")
 #"latest_message_content.json"'1232976008408334356'
