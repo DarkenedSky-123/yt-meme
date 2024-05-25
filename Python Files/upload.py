@@ -114,7 +114,7 @@ def resumable_upload(request):
             status, response = request.next_chunk()
             if response is not None:
                 if 'id' in response:
-                    comm(f"Leave a Like Subscribe !\n Thanks For Watching! :D","seal",get_latest_video("UCT0vmR76yrI__1W2W6ELMxA"))
+                    #comm(f"Leave a Like Subscribe !\n Thanks For Watching! :D","seal",get_latest_video("UCT0vmR76yrI__1W2W6ELMxA"))
                     print('Video id "%s" was successfully uploaded.' % response['id'])
                     with open("Data/Video.txt","w")as f:
                         f.write(response['id'])
