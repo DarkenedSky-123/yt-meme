@@ -5,6 +5,7 @@ import os
 
 try:
         for i in range(0,1, 1):
+                subprocess.run(["python", "Python Files/ff.py"], check=True)
                 subprocess.run(["python", "Python Files/create.py"], check=True)
                 subprocess.run(["python", "Python Files/files.py"], check=True)
                 subprocess.run(["python", "Python Files/daata/read_dc.py"], check=True)
