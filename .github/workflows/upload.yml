@@ -7,10 +7,10 @@ on:
 
 env:
   ACTIONS_ALLOW_UNSECURE_COMMANDS: true
-  API: ${{ secrets.API}}
-  TOKEN: ${{ secrets.TOKEN}}
-  GMAIL: ${{ secrets.GMAIL}}
-  PASS : ${{ secrets.PASS}}
+  API: ${{ secrets.API }}
+  TOKEN: ${{ secrets.TOKEN }}
+  GMAIL: ${{ secrets.GMAIL }}
+  PASS: ${{ secrets.PASS }}
 
 jobs:
   scrape-latest:
@@ -19,14 +19,20 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v2
+
       - name: Set up Python
         uses: actions/setup-python@v3
-      
         with:
           python-version: '3.12.2'
+
+      - name: Set up FFmpeg
+        uses: btzr-io/setup-ffmpeg@v1
+
       - name: Install requirements
         run: pip install -r requirements.txt
+
       - name: Test env vars for python
-        run: TEST_SECRET=${{ secrets.API}}
+        run: echo "TEST_SECRET=${{ secrets.API }}"
+
       - name: Run Bot
         run: python shorts_main.py
