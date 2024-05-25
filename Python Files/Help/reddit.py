@@ -15,11 +15,14 @@ class RedditMemeDownloader:
         last_downloaded_url = ""
         data_filename = "Data/subreddits_data.json"
         if os.path.exists(data_filename):
-            with open(data_filename, "r") as file:
-                data = json.load(file)
-                last_downloaded_url = data.get(self.subreddit_name, {}).get('last_downloaded_url', "")
-        return "https://v.redd.it/"+last_downloaded_url
-    
+            try:
+                with open(data_filename, "r") as file:
+                    data = json.load(file)
+                    last_downloaded_url = data.get(self.subreddit_name, {}).get('last_downloaded_url', "")
+            except (IOError, json.JSONDecodeError) as e:
+                print(f"Error reading {data_filename}: {e}")
+        return "https://v.redd.it/"+last_downloaded_url if last_downloaded_url else ""
+
     def download_meme_videos(self):
         video_info_list = []
 
@@ -95,20 +98,21 @@ class RedditMemeDownloader:
         data_filename = "Data/subreddits_data.json"
         data = {}
         if os.path.exists(data_filename):
-            with open(data_filename, "r") as file:
-                data = json.load(file)
+            try:
+                with open(data_filename, "r") as file:
+                    data = json.load(file)
+            except (IOError, json.JSONDecodeError) as e:
+                print(f"Error reading {data_filename}: {e}")
 
         data[self.subreddit_name] = {'last_downloaded_url': self.last_downloaded_url}
 
-        with open(data_filename, "w") as file:
-            json.dump(data, file, indent=4)
+        os.makedirs(os.path.dirname(data_filename), exist_ok=True)
+        try:
+            with open(data_filename, "w") as file:
+                json.dump(data, file, indent=4)
+        except IOError as e:
+            print(f"Error writing to {data_filename}: {e}")
 
-
-def main():
-    subreddit_name = "funny"  # Replace with your target subreddit
-    downloader = RedditMemeDownloader(subreddit_name)
-    video_info_list = downloader.download_meme_videos()
-    print(f"Downloaded {len(video_info_list)} videos")
-
-if __name__ == "__main__":
-    main()
+# Example usage:
+# downloader = RedditMemeDownloader('funny')
+# downloader.download_meme_videos()
