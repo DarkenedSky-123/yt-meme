@@ -66,6 +66,6 @@ def mess(file, id):
     
 
 mess("Data/channels_data.json", "1232976045339181056")
-mess("Data/subreddits_data.json", "1232976008408334356")
 mess("Data/title.txt", "1243557973784268800")
 mess("Data/Part.txt", "1239562583896494141")
+mess("Data/subreddits_data.json", "1232976008408334356")
