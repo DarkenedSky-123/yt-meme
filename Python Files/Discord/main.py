@@ -2,10 +2,11 @@ import requests
 import json
 from urllib.parse import urlparse, urlunparse
 from moviepy.editor import VideoFileClip, AudioFileClip
-from length import get_video_duration
-from download import download_video
-from pick import pick
+from length import get_video_duration  # Assuming this is your custom module
+from download import download_video    # Assuming this is your custom module
+from pick import pick                  # Assuming this is your custom module
 import os
+
 TOKEN = os.environ['API']
 CHANNEL_ID = '1240324282094190642'
 file_path = "video_urls.json"
@@ -15,7 +16,7 @@ DELETE_message_proxy_url = f"https://discord.com/api/v9/channels/{CHANNEL_ID}/me
 
 headers = {
     "Authorization": f"Bot {TOKEN}",
-    "url-Type": "application/json"
+    "Content-Type": "application/json"
 }
 
 def send_message(message):
@@ -41,11 +42,9 @@ def transform_reddit_url(url):
                 parsed_url.fragment
             ))
             return new_url
-        
     return url
 
 def get_audio_url_from_video_url(video_url):
-    # Transform Reddit video URL to get audio URL
     return transform_reddit_url(video_url)
 
 def download_audio(audio_url, output_path):
@@ -79,28 +78,30 @@ def download_and_combine_audio_video(video_url, output_path):
 def get_latest_message_url():
     response = requests.get(GET_MESSAGES_URL, headers=headers)
     messages = response.json()
-    if messages:
-        latest_message = messages[0]
-        embeds = latest_message.get('embeds', [])
-        if embeds:
-            for embed in embeds:
-                if embed['type'] == 'video':
-                    video_info = embed.get('video', {})
-                    video_url = video_info.get('url')
-                    return video_url
+    if not messages:
+        return None
+
+    latest_message = messages[0]
+    embeds = latest_message.get('embeds', [])
+    if embeds:
+        for embed in embeds:
+            if embed['type'] == 'video':
+                video_info = embed.get('video', {})
+                video_url = video_info.get('url')
+                return video_url
     return None
 
 def delete_latest_message():
     response = requests.get(GET_MESSAGES_URL, headers=headers)
     messages = response.json()
-    if messages:
-        latest_message = messages[0]
-        message_id = latest_message['id']
-        url = DELETE_message_proxy_url.format(message_id=message_id)
-        response = requests.delete(url, headers=headers)
-        return response.status_code == 204
-    else:
+    if not messages:
         return False
+
+    latest_message = messages[0]
+    message_id = latest_message['id']
+    url = DELETE_message_proxy_url.format(message_id=message_id)
+    response = requests.delete(url, headers=headers)
+    return response.status_code == 204
 
 length = 0
 with open(file_path, 'r') as file:
@@ -112,20 +113,22 @@ while l > 0:
     send_message(pick(file_path))
     index += 1
     l -= 1
-    print("index :" + str(index) + " length :" + str(l))
+    print(f"index: {index} length: {l}")
 
 i = 0
 
-while get_latest_message_url() is not None and length < 600:
+while length < 600:
     latest_url = get_latest_message_url()
+    if latest_url is None:
+        break
+
     dur = int(get_video_duration(latest_url))
     print(dur)
     if 2 <= dur <= 20:
         video_url = latest_url
         output_path = f"Videos/combined_video_{i}.mp4"
         download_and_combine_audio_video(video_url, output_path)
-
         length += dur
 
     i += 1
-    # delete_latest_message()
+    delete_latest_message()
