@@ -100,7 +100,7 @@ def reddit_video(name):
 downloaded_count = 0
 while downloaded_count < 4:
     print(f"Downloaded count: {downloaded_count}")
-    functions = [reddit_video]
+    functions = [reddit_video,youtube_video]
     # Randomly choose and execute a function
     random_function = random.choice(functions)
     downloaded = random_function(f"video_{downloaded_count}")
