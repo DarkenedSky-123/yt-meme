@@ -114,7 +114,7 @@ def resumable_upload(request):
             status, response = request.next_chunk()
             if response is not None:
                 if 'id' in response:
-                    #comm(f"Leave a Like Subscribe !\n Thanks For Watching! :D","seal",get_latest_video("UCT0vmR76yrI__1W2W6ELMxA"))
+                    # comm(f"Leave a Like Subscribe !\n Thanks For Watching! :D","seal",get_latest_video("UC7bn2VFvK4JO-KQsHgtWmNw"))
                     print('Video id "%s" was successfully uploaded.' % response['id'])
                     with open("Data/Video.txt","w")as f:
                         f.write(response['id'])
@@ -144,8 +144,8 @@ def resumable_upload(request):
 def main():
     default_file = "video.mp4"
     with open("Data/title.txt", "r") as f:
-        default_title =f.readline() +" #viral #shorts #meme"
-    default_description = "Bounce with laughter!  This meme compilation brings you the funniest moments from the web.  Like & subscribe for more! #dankmemes #memes"
+        default_title =f.readline() +" #fyp #funny #memes #shorts"
+    default_description = "Bounce with laughter!  This meme compilation brings you the funniest moments from the web.  Like & subscribe for more! #dankmemes #memes #fypシ #fyp"
     default_category = "23"
     default_keywords = "memes,dank memes"
     default_privacy_status = "public"  # Assuming "private" is a valid privacy status
