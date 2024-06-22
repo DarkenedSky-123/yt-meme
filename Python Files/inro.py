@@ -93,7 +93,7 @@ if __name__ == "__main__":
         part =f.readline()
 
         emojis = [""]
-        sentence = f'FUNNY MEMES | {part}'
+        sentence = f'Memes that I stole from the internet | {part}'
 
 
 
