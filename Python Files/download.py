@@ -24,8 +24,8 @@ def send_message(message):
     return response.json()
 def youtube_video(name):
     try:
-        channel_names = ['michaelstoren', 'chizzy', 'Ben', 'boeshi', 'Speed', "gbillz", "lukelsfpxin", "Buffessor","onevillage", "Okcron", "dzitkus","Bwag","piero grieco","loic spaghetti","ItsAndrewz","Not703naz","kirkiimad","liam miller","Lord Trunks","Inhyuman","Mr Bombastic","Evil Oogway","ManLikeIssac","OogWay Shorts","Bobmastic Oogway"]
-        channel_ids = ['UCwQOKgQ-2k4Ar7QFcF0EcTg', 'UCbyCM8BZ87KEKOCz_EJP0nQ', 'UCFXCGN9-roeqdFAatAwG8ew','UCSlJ_3JEKqA7QVUJg1C7o9w', 'UCNFT_eq_QCApMEwCACHto9Q', "UCFTRv5q6uXHl2zwI2ANA9oA","UC7gAhc0XbQOMspFhOUY3-hw", "UCjcfXqZdoCrMngD4ILYnUKQ", "UCdVcQc_gdaXhlFx3UvG8pjA","UCQliobRAqnJWuFnlY9Ua0Yg", "UCLmgvkCAGUhRh1Xiv3hg5HQ","UCkf_EFKPgJd7Z_oJnR-Nc0Q","UCPHithq3_DTjN0QlxSrrANw","UCoEN-xBsLvDnKVxTUAzUs9A","UCk7yRx5dvXQVpLfCpG6xeZA","UCK0UNqUdxwkzKCg_ZWuiV5Q","UCiqkIF0F_6y6psq0ullRYdQ","UCWGtLkqqndu7q_SyM1X23FA","UC5ILZRGVeTwzqOhc5Ip746A","UCMBiBMt6YzPPG-sZcPG3F-g","UClz9qVuULDUZ9QUw8QjGmpw","UCpOfgKNJeSoJ6mX4iWMzO2A","UCj-Hs9XuzY15HE1q5R_GnJQ","UC6fxxSnz9WV3SUMhHHduu_A","UCJpdrLX_bsvmVpdOUNNQ6wA"]
+        channel_names = ['michaelstoren', 'chizzy', 'Ben', 'boeshi', 'Speed', "gbillz", "lukelsfpxin", "Buffessor","onevillage", "Okcron", "dzitkus","Bwag","piero grieco","loic spaghetti","ItsAndrewz","Not703naz","kirkiimad","liam miller","Lord Trunks","Inhyuman","ManLikeIssac"]
+        channel_ids = ['UCwQOKgQ-2k4Ar7QFcF0EcTg', 'UCbyCM8BZ87KEKOCz_EJP0nQ', 'UCFXCGN9-roeqdFAatAwG8ew','UCSlJ_3JEKqA7QVUJg1C7o9w', 'UCNFT_eq_QCApMEwCACHto9Q', "UCFTRv5q6uXHl2zwI2ANA9oA","UC7gAhc0XbQOMspFhOUY3-hw", "UCjcfXqZdoCrMngD4ILYnUKQ", "UCdVcQc_gdaXhlFx3UvG8pjA","UCQliobRAqnJWuFnlY9Ua0Yg", "UCLmgvkCAGUhRh1Xiv3hg5HQ","UCkf_EFKPgJd7Z_oJnR-Nc0Q","UCPHithq3_DTjN0QlxSrrANw","UCoEN-xBsLvDnKVxTUAzUs9A","UCk7yRx5dvXQVpLfCpG6xeZA","UCK0UNqUdxwkzKCg_ZWuiV5Q","UCiqkIF0F_6y6psq0ullRYdQ","UCWGtLkqqndu7q_SyM1X23FA","UC5ILZRGVeTwzqOhc5Ip746A","UCMBiBMt6YzPPG-sZcPG3F-g","UCj-Hs9XuzY15HE1q5R_GnJQ"]
         api_key = 'AIzaSyAAkdZaOAyVOMdSlICjgi-bfU1h1z0gmps'
 
         # Loop through each channel and process it
