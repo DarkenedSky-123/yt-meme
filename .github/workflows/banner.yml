@@ -26,4 +26,4 @@ jobs:
       - name: Test env vars for python
         run: TEST_SECRET=${{ secrets.API}}
       - name: Run Bot
-        run: python Python Files/banner/main.py
+        run: python banner/main.py
